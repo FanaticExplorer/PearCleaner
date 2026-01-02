@@ -2,11 +2,16 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="description" content="PearCleaner: A CSS generator to customize YouTube Music in Pear desktop app by hiding unwanted UI elements.">
 <title>PearCleaner - CSS Generator for Pear</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 2rem; color: #333; background: #fdfdfd; }
-    h1 { font-size: 1.6rem; margin-bottom: 1.5rem; border-bottom: 2px solid #eee; padding-bottom: 0.5rem; }
+    h1 { font-size: 1.6rem; margin-bottom: 0.3rem; border-bottom: 2px solid #eee; padding-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center; gap: 15px; }
+    .subtitle { font-size: 0.9rem; color: #666; margin-bottom: 1.5rem; }
+
+    .github-link { color: #333; text-decoration: none; font-size: 1rem; transition: 0.2s; flex-shrink: 0; }
+    .github-link:hover { color: #0969da; }
 
     .main-container { display: flex; gap: 40px; align-items: flex-start; }
     .left-panel { flex: 1; min-width: 350px; }
@@ -19,7 +24,7 @@
     textarea { 
         width: 100%; 
         min-height: 300px;
-        max-height: 60vh;
+        max-height: 55vh;
         font-family: 'Fira Code', 'Courier New', monospace; 
         font-size: 12px;
         padding: 15px; 
@@ -43,18 +48,53 @@
     
     .section-title { font-weight: bold; margin: 1.5rem 0 0.5rem 0; display: block; text-transform: uppercase; font-size: 0.75rem; color: #888; letter-spacing: 0.5px; }
 
-    .warning-banner { background: #fff3cd; border-left: 4px solid #ffc107; padding: 12px 15px; margin-bottom: 1.5rem; border-radius: 4px; font-size: 0.9rem; color: #856404; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box; width: 100%; }
+    .warning-banner { background: #fff3cd; border-left: 4px solid #ffc107; padding: 12px 15px; margin-bottom: 1rem; border-radius: 4px; font-size: 0.9rem; color: #856404; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box; width: 100%; }
     .warning-banner i { flex-shrink: 0; margin-top: 2px; }
-
     button i { margin-right: 8px; }
+
+    .info-toggle { background: #f0f0f0; border: 1px solid #ddd; padding: 10px 12px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; user-select: none; }
+    .info-toggle:hover { background: #e8e8e8; }
+    .info-toggle i { transition: transform 0.2s; }
+    .info-toggle i.rotated { transform: rotate(180deg); }
+
+    .info-content { display: none; background: #f9f9f9; border: 1px solid #eee; border-radius: 6px; padding: 12px 15px; margin-bottom: 1rem; font-size: 0.85rem; line-height: 1.5; color: #555; }
+    .info-content.visible { display: block; }
+    .info-content ol { margin: 8px 0; padding-left: 20px; }
+    .info-content li { margin: 4px 0; }
+    .info-content strong { color: #333; }
 </style>
 </head>
 <body>
 
-<h1>PearCleaner - CSS Generator for Pear</h1>
+<h1>
+    PearCleaner
+    <a href="https://github.com/FanaticExplorer/PearCleaner" target="_blank" class="github-link" title="View on GitHub">
+        <i class="fab fa-github"></i> FanaticExplorer/PearCleaner
+    </a>
+</h1>
+<p class="subtitle">Hide unwanted UI elements in <a href="https://github.com/pear-devs/pear-desktop">Pear</a> with custom CSS</p>
 
 <div class="main-container">
     <div class="left-panel">
+        <div class="warning-banner">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span><strong>Note:</strong> These selectors may become outdated after YouTube updates. Test the CSS after any major YouTube changes.</span>
+        </div>
+
+        <div class="info-toggle" onclick="toggleInfo()">
+            <span><i class="fas fa-question-circle"></i> <strong>How to use?</strong></span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+
+        <div class="info-content" id="infoContent">
+            <ol>
+                <li>Select which elements to hide</li>
+                <li>Copy or download the CSS</li>
+                <li>In Pear: <strong>Options → Visual Tweaks → Theme</strong></li>
+                <li>Import the CSS file or add to existing theme</li>
+                <li><strong>Navigation → Restart App</strong> to apply changes</li>
+            </ol>
+        </div>
         <label class="option-item" style="border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 5px;">
             <input type="checkbox" id="selectAll" onclick="toggleAll(this)"> <strong>Select All Options</strong>
         </label>
@@ -73,10 +113,6 @@
     </div>
 
     <div class="right-panel">
-        <div class="warning-banner">
-            <i class="fas fa-exclamation-triangle"></i>
-            <span><strong>Note:</strong> These selectors may become outdated after YouTube updates. Test the CSS after any major YouTube changes.</span>
-        </div>
         <div class="controls">
             <button id="copyBtn" onclick="copyCSS()"><i class="fas fa-copy"></i>Copy to Clipboard</button>
             <button id="downloadBtn" onclick="downloadCSS()"><i class="fas fa-download"></i>Save as .css File</button>
@@ -86,6 +122,15 @@
 </div>
 
 <script src="app.js"></script>
+
+<script>
+function toggleInfo() {
+    const infoContent = document.getElementById('infoContent');
+    const toggle = document.querySelector('.info-toggle i:last-child');
+    infoContent.classList.toggle('visible');
+    toggle.classList.toggle('rotated');
+}
+</script>
 
 </body>
 </html>
