@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <title>PearDesktop CSS Generator</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 2rem; color: #333; background: #fdfdfd; }
     h1 { font-size: 1.6rem; margin-bottom: 1.5rem; border-bottom: 2px solid #eee; padding-bottom: 0.5rem; }
 
     .main-container { display: flex; gap: 40px; align-items: flex-start; }
     .left-panel { flex: 1; min-width: 350px; }
-    .right-panel { flex: 1.2; position: sticky; top: 1rem; }
+    .right-panel { flex: 1.2; position: sticky; top: 1rem; margin-right: 2rem; }
 
     .option-item { display: flex; align-items: flex-start; margin: 0.6rem 0; cursor: pointer; font-size: 0.95rem; line-height: 1.3; }
     .option-item input { margin-right: 12px; margin-top: 2px; flex-shrink: 0; }
@@ -28,6 +29,7 @@
         resize: none; 
         overflow: hidden;
         box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        box-sizing: border-box;
     }
 
     .controls { margin-bottom: 10px; }
@@ -39,6 +41,11 @@
     button:hover { background: #444; }
     
     .section-title { font-weight: bold; margin: 1.5rem 0 0.5rem 0; display: block; text-transform: uppercase; font-size: 0.75rem; color: #888; letter-spacing: 0.5px; }
+
+    .warning-banner { background: #fff3cd; border-left: 4px solid #ffc107; padding: 12px 15px; margin-bottom: 1.5rem; border-radius: 4px; font-size: 0.9rem; color: #856404; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box; width: 100%; }
+    .warning-banner i { flex-shrink: 0; margin-top: 2px; }
+
+    button i { margin-right: 8px; }
 </style>
 </head>
 <body>
@@ -65,9 +72,13 @@
     </div>
 
     <div class="right-panel">
+        <div class="warning-banner">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span><strong>Note:</strong> These selectors may become outdated after YouTube updates. Test the CSS after any major YouTube changes.</span>
+        </div>
         <div class="controls">
-            <button id="copyBtn" onclick="copyCSS()">Copy to Clipboard</button>
-            <button id="downloadBtn" onclick="downloadCSS()">Save as .css File</button>
+            <button id="copyBtn" onclick="copyCSS()"><i class="fas fa-copy"></i>Copy to Clipboard</button>
+            <button id="downloadBtn" onclick="downloadCSS()"><i class="fas fa-download"></i>Save as .css File</button>
         </div>
         <textarea id="output" readonly placeholder="Select options on the left to generate CSS..."></textarea>
     </div>
