@@ -89,4 +89,25 @@ function copyCSS() {
     });
 }
 
+function downloadCSS() {
+    const output = document.getElementById("output");
+    if (!output.value) return;
+    
+    const element = document.createElement("a");
+    element.setAttribute("href", "data:text/css;charset=utf-8," + encodeURIComponent(output.value));
+    element.setAttribute("download", "pear-desktop-fixes.css");
+    element.style.display = "none";
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+    
+    const btn = document.getElementById('downloadBtn');
+    btn.textContent = "Downloaded!";
+    btn.style.background = "#28a745";
+    setTimeout(() => {
+        btn.textContent = "Save as .css File";
+        btn.style.background = "#222";
+    }, 1500);
+}
+
 render();
